@@ -30,6 +30,12 @@ export class ChatViewProvider implements vscode.WebviewViewProvider {
         vscode.workspace.onDidChangeTextDocument(() => this.sendCodeToWebview());
         vscode.workspace.onDidSaveTextDocument(() => this.sendCodeToWebview());
         vscode.window.onDidChangeActiveTextEditor(() => this.sendCodeToWebview());
+
+        webviewView.onDidChangeVisibility(() => {
+            if (webviewView.visible) {
+                this.sendCodeToWebview();
+            }
+        });
     }
 
     private getCode(): string {
